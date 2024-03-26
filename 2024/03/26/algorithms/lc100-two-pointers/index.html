@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+    <head prefix="og: https://ogp.me/ns#">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  
+  <title>LC100 双指针专题 - Sheep&#39;s Blog</title>
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    <link rel='manifest' href='/manifest.json'>
+  
+
+  
+  
+  
+  <meta property="og:title" content="LC100 双指针专题 - Sheep&#39;s Blog" />
+  
+  <meta property="og:type" content="article" />
+  
+  <meta property="og:url" content="http://example.com/2024/03/26/algorithms/lc100-two-pointers/index.html" />
+  
+  <meta property="og:image" content="/favicon.png" />
+  
+  <meta property="og:article:published_time" content="2024-03-25T16:00:00.000Z" />
+  
+  <meta property="og:article:author" content="Feiyang Wang" />
+  
+  
+
+  
+<link rel="stylesheet" href="/css/var.css">
+
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+<link rel="stylesheet" href="/css/typography.css">
+
+  
+<link rel="stylesheet" href="/css/code-highlighting.css">
+
+  
+<link rel="stylesheet" href="/css/components.css">
+
+  
+<link rel="stylesheet" href="/css/nav.css">
+
+  
+<link rel="stylesheet" href="/css/paginator.css">
+
+  
+<link rel="stylesheet" href="/css/footer.css">
+
+  
+<link rel="stylesheet" href="/css/post-list.css">
+
+  
+  
+<link rel="stylesheet" href="/css/rainbow-banner.css">
+
+  
+  
+  
+<link rel="stylesheet" href="/css/toc.css">
+
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/post.css">
+
+  
+  
+  
+  
+  
+
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+    <body
+        data-color-scheme="auto"
+        data-uppercase-categories="true"
+        
+        data-rainbow-banner="true"
+        data-rainbow-banner-shown="auto"
+        data-rainbow-banner-month="6"
+        data-rainbow-banner-colors="#e50000,#ff8d00,#ffee00,#008121,#004cff,#760188"
+        
+        data-config-root="/"
+        
+        data-toc="true"
+        data-toc-max-depth="2"
+        
+        
+    >
+        <nav id="theme-nav">
+    <div class="inner">
+        <a class="title" href="/">Sheep&#39;s Blog</a>
+        <div class="nav-arrow"></div>
+        <div class="nav-items">
+            <a class="nav-item nav-item-home" href="/">Home</a>
+            
+            
+            <a class="nav-item" href="/categories">Categories</a>
+            
+            
+            
+            <a class="nav-item" href="/tags">Tags</a>
+            
+            
+            
+            <a class="nav-item" href="/archives">Archives</a>
+            
+            
+            
+            <a class="nav-item nav-item-github nav-item-icon" href="https://github.com/fatsheepER" target="_blank" aria-label="GitHub">&nbsp;</a>
+            
+            
+            
+            <a class="nav-item nav-item-search nav-item-icon" href="/search" target="_blank" aria-label="Search">&nbsp;</a>
+            
+            
+        </div>
+    </div>
+</nav>
+        
+<article class="post">
+    <div class="meta">
+        
+        <div class="categories text-uppercase">
+        
+            <a href="/categories/算法解题/">算法解题</a>
+        
+        </div>
+        
+
+        
+        <div class="date" id="date">
+            <span>March</span>
+            <span>26,</span>
+            <span>2024</span>
+        </div>
+        
+
+        <h1 class="title">LC100 双指针专题</h1>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="content">
+        <h2 id="lc283-移动零"><a href="#lc283-移动零" class="headerlink" title="lc283.移动零"></a>lc283.移动零</h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一个数组 <code>nums</code>，编写一个函数将所有 <code>0</code> 移动到数组的末尾，同时保持非零元素的相对顺序。</p>
+<p><strong>请注意：</strong> 必须在不复制数组的情况下原地对数组进行操作。</p>
+<p><strong>示例 1:</strong></p>
+<p><strong>输入:</strong> <code>nums = [0,1,0,3,12]</code><br><strong>输出:</strong> <code>[1,3,12,0,0]</code></p>
+<p><strong>示例 2:</strong></p>
+<p><strong>输入:</strong> <code>nums = [0]</code><br><strong>输出:</strong> <code>[0]</code></p>
+<p><strong>提示</strong>:</p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 104</code></li>
+<li><code>-231 &lt;= nums[i] &lt;= 231 - 1</code></li>
+</ul>
+<p><strong>进阶：</strong> 你能尽量减少完成的操作次数吗？</p>
+<h3 id="一句话思路"><a href="#一句话思路" class="headerlink" title="一句话思路"></a>一句话思路</h3><p>使用快慢双指针。快指针遍历整个数组，每遇到非 0 元素就使用慢指针将它们一次添加到数组开头，最终将慢指针后的所有元素修改为 0，此题得解。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">moveZeroes</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> outputIndex = <span class="number">0</span>, searchIndex = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (searchIndex &lt; nums.<span class="built_in">size</span>()) &#123;</span><br><span class="line">            <span class="keyword">while</span> (searchIndex &lt; nums.<span class="built_in">size</span>() &amp;&amp; nums[searchIndex] == <span class="number">0</span>) &#123;</span><br><span class="line">                searchIndex++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (searchIndex &gt;= nums.<span class="built_in">size</span>()) &#123; <span class="keyword">break</span>; &#125;</span><br><span class="line">            nums[outputIndex++] = nums[searchIndex];</span><br><span class="line">            searchIndex++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = outputIndex; i &lt; nums.<span class="built_in">size</span>(); i++) &#123; nums[i] = <span class="number">0</span>; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h3><h2 id="lc15-三数之和"><a href="#lc15-三数之和" class="headerlink" title="lc15.三数之和"></a>lc15.三数之和</h2><h3 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h3><p>给你一个整数数组 <code>nums</code> ，判断是否存在三元组 <code>[nums[i], nums[j], nums[k]]</code> 满足 <code>i != j</code>、<code>i != k</code> 且 <code>j != k</code> ，同时还满足 <code>nums[i] + nums[j] + nums[k] == 0</code> 。请你返回所有和为 <code>0</code> 且不重复的三元组。</p>
+<p><strong>注意：</strong> 答案中不可以包含重复的三元组。</p>
+<p><strong>示例 1：</strong></p>
+<p><strong>输入：</strong> <code>nums = [-1,0,1,2,-1,-4]</code><br><strong>输出：</strong> <code>[[-1,-1,2],[-1,0,1]]</code><br><strong>解释：</strong><br><code>nums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0 。</code><br><code>nums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0 。</code><br><code>nums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0 。</code><br>不同的三元组是 <code>[-1,0,1]</code> 和 <code>[-1,-1,2]</code> 。<br>注意，输出的顺序和三元组的顺序并不重要。</p>
+<p><strong>示例 2：</strong></p>
+<p><strong>输入：</strong> <code>nums = [0,1,1]</code><br><strong>输出：</strong> <code>[]</code><br><strong>解释：</strong> <code>唯一可能的三元组和不为 0 。</code></p>
+<p><strong>示例 3：</strong></p>
+<p><strong>输入：</strong> <code>nums = [0,0,0]</code><br><strong>输出：</strong> <code>[[0,0,0]]</code><br><strong>解释：</strong> <code>唯一可能的三元组和为 0 。</code></p>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>3 &lt;= nums.length &lt;= 3000</code></li>
+<li><code>-10^5 &lt;= nums[i] &lt;= 10^5</code></li>
+</ul>
+<h3 id="一句话思路-1"><a href="#一句话思路-1" class="headerlink" title="一句话思路"></a>一句话思路</h3><p>排序后使用三指针。最左侧最小值指针固定，其右侧两指针分列一左一右向内遍历。根据三数之和的正负性移动左右指针，直到左右相遇。在取到一组值后，左右指针向内移动到非重复值处，如此可以确保一次遍历找到某一固定值情况下的所有可能三元组。然后最左侧指针向右移值下一个非重复值处，此题得解。</p>
+<h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">threeSum</span>(vector&lt;<span class="type">int</span>&gt;&amp; nums) &#123;</span><br><span class="line">        <span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>());</span><br><span class="line">        vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; ans;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> fix = <span class="number">0</span>; fix &lt;= nums.<span class="built_in">size</span>() - <span class="number">3</span>; fix++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[fix] &gt; <span class="number">0</span>) <span class="keyword">break</span>;</span><br><span class="line">            <span class="comment">// 同一值为 fix 的情况已经全部搜索 再次搜索只会得到重复答案 故跳过</span></span><br><span class="line">            <span class="keyword">if</span> (fix &gt; <span class="number">0</span> &amp;&amp; nums[fix] == nums[fix - <span class="number">1</span>]) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="type">int</span> left = fix + <span class="number">1</span>, right = nums.<span class="built_in">size</span>() - <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">                <span class="type">int</span> sum = nums[fix] + nums[left] + nums[right];</span><br><span class="line">                <span class="keyword">if</span> (sum &lt; <span class="number">0</span>) left++;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (sum &gt; <span class="number">0</span>) right--;</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    ans.<span class="built_in">push_back</span>(&#123;nums[fix], nums[left], nums[right]&#125;);</span><br><span class="line">                    <span class="comment">// 继续搜索 排除重复项</span></span><br><span class="line">                    <span class="keyword">while</span> (left &lt; right &amp;&amp; nums[left] == nums[++left]);</span><br><span class="line">                    <span class="keyword">while</span> (left &lt; right &amp;&amp; nums[right] == nums[--right]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="备注-1"><a href="#备注-1" class="headerlink" title="备注"></a>备注</h3><p>有时候可以考虑排序 + 双指针结合以提高遍历效率。</p>
+<h2 id="lc11-盛最多水容器"><a href="#lc11-盛最多水容器" class="headerlink" title="lc11.盛最多水容器"></a>lc11.盛最多水容器</h2><h3 id="题目描述-2"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一个长度为 <code>n</code> 的整数数组 <code>height</code> 。有 <code>n</code> 条垂线，第 <code>i</code> 条线的两个端点是 <code>(i, 0)</code> 和 <code>(i, height[i])</code> 。</p>
+<p>找出其中的两条线，使得它们与 <code>x</code> 轴共同构成的容器可以容纳最多的水。返回容器可以储存的最大水量。</p>
+<p><strong>说明：</strong> 你不能倾斜容器。</p>
+<p><strong>示例 1：</strong></p>
+<p><img src="https://aliyun-lc-upload.oss-cn-hangzhou.aliyuncs.com/aliyun-lc-upload/uploads/2018/07/25/question_11.jpg"></p>
+<p><strong>输入：</strong> <code>[1,8,6,2,5,4,8,3,7]</code><br><strong>输出：</strong> <code>49</code><br><strong>解释：</strong> 图中垂直线代表输入数组 <code>[1,8,6,2,5,4,8,3,7]</code>。在此情况下，容器能够容纳水（表示为蓝色部分）的最大值为 <code>49</code>。</p>
+<p><strong>示例 2：</strong></p>
+<p><strong>输入：</strong> <code>height = [1,1]</code><br><strong>输出：</strong> <code>1</code></p>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>n == height.length</code></li>
+<li><code>2 &lt;= n &lt;= 105</code></li>
+<li><code>0 &lt;= height[i] &lt;= 104</code></li>
+</ul>
+<h3 id="一句话思路-2"><a href="#一句话思路-2" class="headerlink" title="一句话思路"></a>一句话思路</h3><p>从一左一右双指针开始，以左右指针为容器的两板。每一次，如果移动两板中的 <strong>长板</strong> ，下一块板可能更长、可能更短。如果下一块板更长，那么两板的短板依旧是另一块板，而宽度减少，最终容积减少；如果下一块板更短，则可能容积减少地更多。可见，在缩短宽度的情况下，只有移动 <strong>短板</strong> 的位置才有可能使得容积变大。故我们每次都移动两板中的短板，比较容积增减，此题得解。</p>
+<h3 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getArea</span><span class="params">(<span class="type">int</span> width, <span class="type">int</span> height)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> width * height;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">maxArea</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; height)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> left = <span class="number">0</span>, right = height.<span class="built_in">size</span>() - <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> maxRecord = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">            maxRecord = <span class="built_in">max</span>(maxRecord, <span class="built_in">getArea</span>(right - left, <span class="built_in">min</span>(height[left], height[right])));</span><br><span class="line">            <span class="keyword">if</span> (height[left] &lt; height[right]) left++;</span><br><span class="line">            <span class="keyword">else</span> right--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> maxRecord;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="备注-2"><a href="#备注-2" class="headerlink" title="备注"></a>备注</h3><p>短板效应使得改变短板成为最优解，这是很有趣的现象。</p>
+<h2 id="lc42-接雨水"><a href="#lc42-接雨水" class="headerlink" title="lc42.接雨水"></a>lc42.接雨水</h2><h3 id="题目描述-3"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定 <code>n</code> 个非负整数表示每个宽度为 <code>1</code> 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。</p>
+<p><strong>示例 1：</strong></p>
+<p><img src="https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2018/10/22/rainwatertrap.png"></p>
+<p><strong>输入：</strong> <code>height = [0,1,0,2,1,0,1,3,2,1,2,1]</code><br><strong>输出：</strong> <code>6</code><br><strong>解释：</strong> 上面是由数组 <code>[0,1,0,2,1,0,1,3,2,1,2,1]</code> 表示的高度图，在这种情况下，可以接 <code>6</code> 个单位的雨水（蓝色部分表示雨水）。 </p>
+<p><strong>示例 2：</strong></p>
+<p><strong>输入：</strong> <code>height = [4,2,0,3,2,5]</code><br><strong>输出：</strong> <code>9</code></p>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>n == height.length</code></li>
+<li><code>1 &lt;= n &lt;= 2 * 104</code></li>
+<li><code>0 &lt;= height[i] &lt;= 10^5</code></li>
+</ul>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><h4 id="1-计算行"><a href="#1-计算行" class="headerlink" title="1.计算行"></a>1.计算行</h4><p>我们可以一行一行计算水的体积，但这等同于把一个一维数组问题演变成遍历二维数组，效率低，无法通过全部用例。</p>
+<h4 id="2-计算列"><a href="#2-计算列" class="headerlink" title="2.计算列"></a>2.计算列</h4><p>我们可以一列一列计算水的体积，首先需要弄清处计算的逻辑。对于任意一列 <code>col</code>，我们知道当前列的高度 <code>height[col]</code>。如果我们知道 col 左右的最高项 <code>max_left</code> 和 <code>max_right</code>，那么可以发现，当前列的积水高度取决于这两项中的较小项。</p>
+<p>如果每计算一列都要向左向右遍历寻找最大项，那么效率无疑低下。所以可以创建两个数组，利用动态规划记录某一列向左向右的最大项，然后从左到右计算每一列的积水体积，此题得解。</p>
+<h4 id="3-双指针"><a href="#3-双指针" class="headerlink" title="3.双指针"></a>3.双指针</h4><p>在上一种方法中我们建立了两个和原数据等长的数组，然而数组中的每一个元素实际上只被使用过一次。为了优化这种空间中的浪费，可以联系上一道题中的短板效应，引入双指针。</p>
+<p>在数组的左右各设一个指针，同时维护两个变量 <code>max_left</code> 和 <code>max_right</code>。由于数组两段（<code>0</code> 和 <code>size() - 1</code>）不能盛水，所以左右指针各向内移一格。两端的 <code>height</code> 作为 <code>max_left</code> 和 <code>max_right</code> 的初值，以下简称 max 值。每一次我们更新两端的 max 值，然后判断两个 max 的大小。</p>
+<p>首先可以确定的是，在两个指针向内遍历的过程中，左右 max 的值只可能变大，不可能变小了。</p>
+<p><strong>如果左侧 max 大于右侧</strong>：根据上一种方法中我们总结出的规律，某一列的储水高度取决于自身高度以及两边最大值的较小值。此时我们不仅知道 <code>height[left]</code>，还知道在 left 指针的右侧，具体来说是 right 指针的右侧存在一个 <code>height[i]</code> 大于左侧的 max，因此可以确定左侧 max 是短板，因此我们可以求出 left 指针处的储水高度，然后让 left 指针右移继续判断。</p>
+<p>相对的，如果右侧 max 更大我们就可以计算 right 处的储水高度。如果左右 max 的值相等，结合上面陈述的，左右 max 的值接下来不可能变得更小，所以我们可以任意选择一个迭代，此题得解。</p>
+<h3 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h3><h4 id="1-计算列"><a href="#1-计算列" class="headerlink" title="1.计算列"></a>1.计算列</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">trap</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; height)</span> </span>&#123;</span><br><span class="line">	<span class="type">int</span> sum_volume = <span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> len = height.<span class="built_in">size</span>();</span><br><span class="line">	<span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">max_left</span><span class="params">(len, <span class="number">0</span>)</span>, <span class="title">max_right</span><span class="params">(len, <span class="number">0</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// init max_left and max_right</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; len - <span class="number">1</span>; i++) max_left[i] = <span class="built_in">max</span>(max_left[i - <span class="number">1</span>], height[i - <span class="number">1</span>]);</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = len - <span class="number">2</span>; i &gt; <span class="number">0</span>; i--) max_right[i] = <span class="built_in">max</span>(max_right[i + <span class="number">1</span>], height[i + <span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// sum up the volume</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; len - <span class="number">1</span>; i++) &#123;<span class="type">int</span> add = <span class="built_in">min</span>(max_left[i], max_right[i]) - height[i];</span><br><span class="line">		<span class="keyword">if</span> (add &gt; <span class="number">0</span>) sum_volume += add;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> sum_volume;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-双指针"><a href="#2-双指针" class="headerlink" title="2.双指针"></a>2.双指针</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">trap</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; height)</span> </span>&#123;</span><br><span class="line">	<span class="type">int</span> sum_volume = <span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> len = height.<span class="built_in">size</span>();</span><br><span class="line">	<span class="type">int</span> left_max = height[<span class="number">0</span>], right_max = height[len - <span class="number">1</span>];</span><br><span class="line">	<span class="type">int</span> left = <span class="number">1</span>, right = len - <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 指针只有作为短板时才会计算本列 故存在指针相遇后计算的情况</span></span><br><span class="line">	<span class="keyword">while</span> (left &lt;= right) &#123;</span><br><span class="line">		<span class="comment">// 包括自己，sum 不会增加负数</span></span><br><span class="line">		left_max = <span class="built_in">max</span>(left_max, height[left]);</span><br><span class="line">		right_max = <span class="built_in">max</span>(right_max, height[right]);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 计算水量取决于两边 max 中的 min</span></span><br><span class="line">		<span class="keyword">if</span> (left_max &lt; right_max) &#123;</span><br><span class="line">			<span class="comment">// leftMax 是 min，可以计算出 left 列的水量</span></span><br><span class="line">			sum_volume += left_max - height[left];</span><br><span class="line">			left++;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="comment">// right_max 是 min，可以计算出 right 列的水量</span></span><br><span class="line">			sum_volume += right_max - height[right];</span><br><span class="line">			right--;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> sum_volume;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="备注-3"><a href="#备注-3" class="headerlink" title="备注"></a>备注</h3><p>对于双指针的循环条件中究竟有没有等号，即是否是 <code>while (left &lt;= right)</code>，一时竟想不出来。此题的遍历过程中，指针并非移动到某一处就立刻计算数值，而是两个指针相互比较之后计算其中某一个，所以是一定需要包含等号的。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>对于一些问题，可以排序后按照结果的正负性遍历双指针以减少许多重复与无意义的枚举。对于一些与数据顺序有关的问题当然就不能排序了，但是可以通过数据之间大小的对比操纵双指针，最终的目的仍然是加强枚举情况的效率。二分查找也是一种双指针思路，改天可以把之前写过的相关题目写到这里。</p>
+
+    </div>
+
+    
+    <div class="about">
+        <h1>About this Post</h1>
+        <div class="details">
+            <p>This post is written by Feiyang Wang, licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc/4.0">CC BY-NC 4.0</a>.</p>
+        </div>
+        
+        <p class="tags">
+            
+            <i class="icon"></i>
+            <a href="/tags/LeetCode/" class="tag">#LeetCode</a><a href="/tags/双指针/" class="tag">#双指针</a><a href="/tags/热题100/" class="tag">#热题100</a>
+        </p>
+        
+    </div>
+    
+
+    <div class="container post-prev-next">
+        
+        <a href="/2024/03/26/hello-world/" class="next">
+            <div>
+                <div class="text">
+                    <p class="label">Next</p>
+                    <h3 class="title">Hello World</h3>
+                </div>
+            </div>
+        </a>
+        
+        <a class="prev"></a>
+    </div>
+
+    
+        
+        
+    
+</article>
+
+        <footer>
+    <div class="inner">
+        <div class="links">
+            
+            <div class="group">
+                <h2 class="title">Blog</h2>
+                
+                <a href="/" class="item">Blog</a>
+                
+                <a href="/archives" class="item">Archives</a>
+                
+                <a href="/tags" class="item">Tags</a>
+                
+                <a href="/categories" class="item">Categories</a>
+                
+                <a href="/search" class="item">Search</a>
+                
+            </div>
+            
+            <div class="group">
+                <h2 class="title">Recommended</h2>
+                
+                <a target="_blank" rel="noopener" href="https://github.com/MrWillCom/rsa-cli" class="item">RSA CLI</a>
+                
+                <a target="_blank" rel="noopener" href="https://github.com/MrWillCom/hexo-theme-cupertino" class="item">Hexo Theme Cupertino</a>
+                
+                <a target="_blank" rel="noopener" href="https://github.com/MrWillCom/a-calendar" class="item">A Calendar</a>
+                
+                <a target="_blank" rel="noopener" href="https://github.com/MrWillCom/auto-mirroring-bucket" class="item">Auto Mirroring Bucket</a>
+                
+            </div>
+            
+            <div class="group">
+                <h2 class="title">Me</h2>
+                
+                <a target="_blank" rel="noopener" href="https://github.com/fatsheepER" class="item">GitHub</a>
+                
+                <a href="mailto:fatsheeper@icloud.com" class="item">Email</a>
+                
+            </div>
+            
+        </div>
+        <span>&copy; 2024 Feiyang Wang<br>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> </span>
+        
+        
+            <br>
+            <div class="color-scheme-toggle" role="radiogroup" id="theme-color-scheme-toggle">
+                <label>
+                    <input type="radio" value="light">
+                    <span>Light</span>
+                </label>
+                <label>
+                    <input type="radio" value="dark">
+                    <span>Dark</span>
+                </label>
+                <label>
+                    <input type="radio" value="auto">
+                    <span>Auto</span>
+                </label>
+            </div>
+        
+    </div>
+</footer>
+
+
+        
+<script src="/js/main.js"></script>
+
+        
+        
+        
+
+        
+        <script src="https://unpkg.com/scrollreveal"></script>
+        <script>
+            window.addEventListener('load', () => {
+                ScrollReveal({ delay: 250, reset: true, easing: 'cubic-bezier(0, 0, 0, 1)' })
+                ScrollReveal().reveal('.post-list-item .cover-img img')
+                ScrollReveal().reveal('.post-list-item, .card, .content p img, .content .block-large img', { distance: '60px', origin: 'bottom', duration: 800 })
+            })
+        </script>
+        
+    </body>
+</html>
